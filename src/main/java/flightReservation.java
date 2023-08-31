@@ -2,8 +2,13 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
+
+import java.time.Duration;
 import java.util.List;
+
 
 public class flightReservation {
     public static void main(String[] args) throws InterruptedException {
@@ -33,9 +38,23 @@ public class flightReservation {
         driver.findElement(By.cssSelector("div[data-id='Dec']")).click();
         driver.findElement(By.cssSelector("div[data-id='2023-12-29']")).click();
         driver.findElement(By.cssSelector("div[data-id='2024-01-07']")).click();
-        Thread.sleep(1000);
-        driver.findElement(By.cssSelector("ry-tooltip[id='ry-tooltip-12'] ry-counter-button[aria-label='1Adults+1']")).click();
 
+        // add another passenger
+        Thread.sleep(1000);
+        driver.findElement(By.cssSelector("ry-counter[data-ref='passengers-picker__adults'] div[class='counter__button-wrapper--enabled']")).click();
+        driver.findElement(By.cssSelector("button[class='flight-search-widget__start-search ng-tns-c2080360900-3 ry-button--gradient-yellow']")).click();
+
+        // confirm flight selection
+        WebDriverWait w = new WebDriverWait(driver, Duration.ofSeconds(10));
+        w.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("button[class='flight-card-summary__select-btn ng-tns-c2051464752-16 ry-button--gradient-blue']")));
+        driver.findElement(By.cssSelector("button[class='flight-card-summary__select-btn ng-tns-c2051464752-16 ry-button--gradient-blue']")).click();
+        driver.findElement(By.cssSelector("button[class='flight-card-summary__select-btn ng-tns-c2051464752-13 ry-button--gradient-blue']")).click();
+
+        w.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//div[@class='fare-table__fare-column-border'])[1]")));
+        driver.findElement(By.xpath("(//div[@class='fare-table__fare-column-border'])[1]")).click();
+
+        Thread.sleep(1000);
+        driver.findElement(By.cssSelector("button[class='fare-footer__submit-btn ry-button--gradient-yellow']")).click();
 
     }
 }
