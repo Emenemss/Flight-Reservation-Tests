@@ -45,16 +45,20 @@ public class flightReservation {
         driver.findElement(By.cssSelector("button[class='flight-search-widget__start-search ng-tns-c2080360900-3 ry-button--gradient-yellow']")).click();
 
         // confirm flight selection
-        WebDriverWait w = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebDriverWait w = new WebDriverWait(driver, Duration.ofSeconds(20));
         w.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("button[class='flight-card-summary__select-btn ng-tns-c2051464752-16 ry-button--gradient-blue']")));
         driver.findElement(By.cssSelector("button[class='flight-card-summary__select-btn ng-tns-c2051464752-16 ry-button--gradient-blue']")).click();
         driver.findElement(By.cssSelector("button[class='flight-card-summary__select-btn ng-tns-c2051464752-13 ry-button--gradient-blue']")).click();
 
+        // confirm flight plan
         w.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//div[@class='fare-table__fare-column-border'])[1]")));
         driver.findElement(By.xpath("(//div[@class='fare-table__fare-column-border'])[1]")).click();
 
-        Thread.sleep(1000);
-        driver.findElement(By.cssSelector("button[class='fare-footer__submit-btn ry-button--gradient-yellow']")).click();
+        w.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//button[@class='fare-footer__submit-btn ry-button--outline-light-blue'])[1]")));
+        driver.findElement(By.xpath("(//button[@class='fare-footer__submit-btn ry-button--outline-light-blue'])[1]")).click();
+
+        Thread.sleep(500);
+        driver.close();
 
     }
 }
